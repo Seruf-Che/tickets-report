@@ -1,0 +1,39 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: @color-bg-modal;
+
+
+  &--disabled {
+    display: none;
+  }
+
+  &__window {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    width: 420px;
+    height: 300px;
+    background-color: @color-bg-alt;
+    border: 1px solid @color-border;
+    border-radius: 5px;
+  }
+
+  &__text {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,45 @@
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 15px;
+  margin: 0 auto;
+  width: 860px;
+  height: 100%;
+  text-align: center;
+
+  &--options {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid @color-border;
+    border-radius: 5px;
+    background-color: @color-bg-alt;
+  }
+
+  &__col11 {
+    width: 100%;
+  }
+
+  &__col11--margin-top {
+    margin-top: 20px;
+  }
+
+
+  &__col12 {
+    width: 48.65%;
+  }
+
+  @media only screen and (max-width: 860px) {
+    & {
+      width: 98%;
+    }
+
+    &__col12 {
+      width: 100%;
+    }
+
+    &__window {
+      width: 300px;
+    }
+  }
+}

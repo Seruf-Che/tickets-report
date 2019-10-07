@@ -1,0 +1,44 @@
+.button {
+  display: block;
+  padding: 10px 5px;
+  width: 150px;
+  font-family: @font-content;
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 700;
+  color: @color-content;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 2px @color-border solid;
+  cursor: pointer;
+  outline: none;
+  transition: @transition;
+
+  &:hover {
+    color: @color-bg-alt;
+    background-color: @color-border;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &:disabled:hover {
+    color: @color-content;
+    background-color: transparent;
+    cursor: default;
+  }
+
+  &--center {
+    margin: 0 auto;
+  }
+
+  &--wide {
+    width: 250px;
+  }
+
+  &__calcReport {
+    margin-top: 20px;
+  }
+}

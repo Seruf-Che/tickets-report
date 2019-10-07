@@ -1,0 +1,63 @@
+.form {
+  &__input {
+    padding-left: 10px;
+    font-size: 18px;
+    line-height: 38px;
+    font-weight: 700;
+    color: @color-content;
+    background-color: transparent;
+    border: 1px @color-border-inactive solid;
+    outline: none;
+    transition: @transition;
+  }
+
+  &__input:disabled {
+    opacity: 0.5;
+  }
+
+  &__input:disabled:hover {
+    opacity: 0.5;
+    border: 1px @color-border-inactive solid;
+  }
+
+  &__input:hover {
+    border: 1px @color-border solid;
+  }
+  
+  &__input:focus {
+    border: 1px @color-border solid;
+  }
+
+  &__select {
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-bottom: 9px;
+    padding-top: 9px;
+    font-size: 18px;
+    line-height: 38px;
+    font-weight: 700;
+    color: @color-content;
+    background-color: transparent;
+    border: 1px @color-border-inactive solid;
+    outline: none;
+    transition: @transition;
+  }
+
+  &__select:hover {
+    border: 1px @color-border solid;
+    cursor: pointer;
+  }
+
+  &__select:focus {
+    border: 1px @color-border solid;
+  }
+
+  &__select option {
+    color: @color-content;
+    background: @color-bg-alt;
+  }
+
+  &__label {
+    margin-left: 20px;
+  }
+}

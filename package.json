@@ -1,5 +1,5 @@
 {
-  "name": "Tickets Report",
+  "name": "Tickets-report",
   "version": "1.0.0",
   "description": "The app generates Tickets Report",
   "main": "index.js",
