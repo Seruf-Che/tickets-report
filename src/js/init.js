@@ -1,20 +1,24 @@
 class Spiner {
-  constructor(spinerLocationSelector = 'main', spinerBlockClass = 'spinner', spinerElementClass = 'loader') {
+  constructor(
+    spinerLocationSelector = 'main',
+    spinerBlockClass = 'spinner',
+    spinerElementClass = 'spinner__loader'
+  ) {
     this.spinerLocation = document.querySelector(spinerLocationSelector);
-    
+
     this.spinnerElement = document.createElement('div');
     this.spinnerElement.classList.add(spinerBlockClass);
-    
+
     this.spinnerLoader = document.createElement('div');
-    this.spinnerLoader.classList.add(`${spinerBlockClass}__${spinerElementClass}`);
-    
+    this.spinnerLoader.classList.add(spinerElementClass);
+
     this.spinnerElement.appendChild(this.spinnerLoader);
   }
-  
+
   show() {
     this.spinerLocation.appendChild(this.spinnerElement);
   }
-  
+
   hide() {
     this.spinerLocation.removeChild(this.spinnerElement);
   }
@@ -26,39 +30,45 @@ class Report {
     this.year = year;
     this.month = month;
     this.sortBy = sortBy;
-  }  
+  }
 }
 
 class Alert {
   constructor(
-    text = 'Alert Window Text', 
-    okButtonText = 'Ok', 
-    alertBlockSelector = '.alert', 
-    alertTextSelector = '.alert__text', 
-    alertButtonSelector = '.alert__button',
-    alertLocationSelector = 'main'
+    text = 'Alert Window Text',
+    okButtonText = 'Ok',
+    alertLocationSelector = 'main',
+    alertBlockClass = 'alert',
+    alertBlockWrapperClass = 'alert__window',
+    alertTextClass = 'alert__text',
+    alertButtonClass = 'alert__button'
   ){
     this.alertLocation = document.querySelector(alertLocationSelector);
-    
+
     this.alertBlock = document.createElement('div');
-    this.alertBlock.classList.add(alertBlockSelector);
-    
+    this.alertBlock.classList.add(alertBlockClass);
+
+    this.alertBlockWrapper = document.createElement('div');
+    this.alertBlockWrapper.classList.add(alertBlockWrapperClass);
+
     this.alertText = document.createElement('div');
-    this.alertText.classList.add(alertTextSelector);
+    this.alertText.classList.add(alertTextClass);
     this.alertText.textContent = text
-    
-    this.alertButton = document.createElement('div');
-    this.alertButton.classList.add(alertButtonSelector);
+
+    this.alertButton = document.createElement('button');
+    this.alertButton.classList.add(alertButtonClass,'button');
     this.alertButton.textContent = okButtonText;
-      
-    this.alertBlock.appendChild(this.alertText);
-    this.alertBlock.appendChild(this.alertButton);
+
+    this.alertBlockWrapper.appendChild(this.alertText);
+    this.alertBlockWrapper.appendChild(this.alertButton);
+    this.alertBlock.appendChild(this.alertBlockWrapper);
+    this.alertButton.addEventListener('click', () => this.hide());
   }
-  
+
   show() {
     this.alertLocation.appendChild(this.alertBlock);
   }
-  
+
   hide() {
     this.alertLocation.removeChild(this.alertBlock);
   }
@@ -68,12 +78,12 @@ const setDate = () => {
   let now = new Date();
   let year = now.getFullYear();
   let month = now.getMonth() - 1;
-  
+
   if (month < 0) {
     month = 11;
     year--;
   }
-  
+
   document.getElementById('year').value = year;
   document.getElementById('month').selectedIndex = month;
 }
@@ -83,7 +93,9 @@ const handleReportFile = evt => {
 
   if ( file.name.slice(-4) !== '.csv' ) {
     evt.target.value = "";
-//    return modal.showAlert("Sorry, " + file.name + " is invalid, allowed extension is .csv only");
+    console.log('Wrong');
+    let alert = new Alert(`Sorry, ${file.name} is invalid, allowed extension is .csv only`);
+    return alert.show();
   }
 /*
   var reader = new FileReader();
@@ -98,7 +110,6 @@ const handleReportFile = evt => {
     window.getReport.buttonGetReport.disabled = false;
   }*/
  }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
