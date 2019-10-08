@@ -7,10 +7,9 @@
   <meta name="copyright" content="(c)Seruf2019">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
-  <link rel="apple-touch-icon" href="apple-touch-icon-180x180.png">
   <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body class="body">
   <header class="page-header">
@@ -22,7 +21,10 @@
     <div class="row row--options">
       <div class="row__col11">
         <h2>Zendesk report</h2>
-        <input type="file" id="zendesk-report">
+        <div class="form__file">
+          <input type="file" id="zendesk-report">
+          <button class="button button--input">Upload a report</button>
+        </div>
       </div>
       <div class="row__col11 row__col11--margin-top">
         <input type="number" id="year" value="2018" class="form__input">
@@ -46,7 +48,7 @@
           <option value="amount">Amount</option>
         </select>
       </div>
-      <button class="calcReport button button--center button__calcReport">Get report</button>
+      <button disabled class="calcReport button button--center button__calcReport">Get report</button>
     </div>
     <div class="row">
       <div class="row__col11">
@@ -54,24 +56,12 @@
         </table>
       </div>
     </div>
-    <!-- <div class="modal modal--disabled">
-      <div class="modal__window">
-        <p class="modal__text">There is not any ticket</p>
-        <button class="button modal__button">ok</button>
-      </div>
-    </div> -->
   </main>
-  <template class="reportResultTemplate">
-    <tr class="report__row">
-      <td class="report__data"></td>
-      <td class="report__data"></td>
-    </tr>
-  </template>
   <footer class="page-footer">
     <div class="row">
       <p class="copyright">Copyright © 2019 Made By Seruf.</p>
     </div>
   </footer>
-  <script src="js/main.js"></script>
+  <script src="js/main.min.js"></script>
 </body>
 </html>

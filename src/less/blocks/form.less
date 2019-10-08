@@ -60,4 +60,28 @@
   &__label {
     margin-left: 20px;
   }
+  
+  &__file {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    
+    &:hover {
+      cursor: pointer;
+    }
+    
+    &:hover .button--input{
+      color: @color-bg-alt;
+      background-color: @color-border;
+
+    }
+    
+    & input {
+      font-size: 100px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+  }
 }
