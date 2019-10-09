@@ -1,3 +1,20 @@
+class DomElemetnt {
+  constructor(tag = 'div', classList = [], textContent){    
+    let element = document.createElement(tag);
+    if (textContent) element.textContent = textContent;
+    if (classList) classList.forEach(elem => element.classList.add(elem));
+    this._element = element;
+  }
+  
+  get element() {
+    return this._element;
+  }
+  
+  set element(value) {
+    this._element = value;
+  }
+}
+
 class Spiner {
   constructor(
     spinerLocationSelector = 'main',
@@ -6,21 +23,17 @@ class Spiner {
   ) {
     this.spinerLocation = document.querySelector(spinerLocationSelector);
 
-    this.spinnerElement = document.createElement('div');
-    this.spinnerElement.classList.add(spinerBlockClass);
-
-    this.spinnerLoader = document.createElement('div');
-    this.spinnerLoader.classList.add(spinerElementClass);
-
-    this.spinnerElement.appendChild(this.spinnerLoader);
+    this.spinnerElement = new DomElemetnt('div',[spinerBlockClass]);
+    let spinnerLoader = new DomElemetnt('div',[spinerElementClass]);
+    this.spinnerElement.element.appendChild(spinnerLoader.element);
   }
 
   show() {
-    this.spinerLocation.appendChild(this.spinnerElement);
+    this.spinerLocation.appendChild(this.spinnerElement.element);
   }
 
   hide() {
-    this.spinerLocation.removeChild(this.spinnerElement);
+    this.spinerLocation.removeChild(this.spinnerElement.element);
   }
 }
 
@@ -35,33 +48,25 @@ class Alert {
     alertButtonClass = 'alert__button'
   ){
     this.alertLocation = document.querySelector(alertLocationSelector);
-
-    this.alertBlock = document.createElement('div');
-    this.alertBlock.classList.add(alertBlockClass);
-
-    this.alertBlockWrapper = document.createElement('div');
-    this.alertBlockWrapper.classList.add(alertBlockWrapperClass);
-
-    this.alertText = document.createElement('div');
-    this.alertText.classList.add(alertTextClass);
-    this.alertText.textContent = text
-
-    this.alertButton = document.createElement('button');
-    this.alertButton.classList.add(alertButtonClass,'button');
-    this.alertButton.textContent = okButtonText;
-
-    this.alertBlockWrapper.appendChild(this.alertText);
-    this.alertBlockWrapper.appendChild(this.alertButton);
-    this.alertBlock.appendChild(this.alertBlockWrapper);
-    this.alertButton.addEventListener('click', () => this.hide());
+      
+    let alertBlock = new DomElemetnt('div',[alertBlockClass],'');
+    let alertBlockWrapper = new DomElemetnt('div',[alertBlockWrapperClass],'');
+    let alertText = new DomElemetnt('div',[alertTextClass],text);
+    let alertButton = new DomElemetnt('button',[alertButtonClass,'button'],okButtonText);
+    alertButton.element.addEventListener('click', () => this.hide());
+    alertBlockWrapper.element.appendChild(alertText.element);
+    alertBlockWrapper.element.appendChild(alertButton.element);
+    alertBlock.element.appendChild(alertBlockWrapper.element);
+    
+    this.alertBlock = alertBlock;
   }
 
   show() {
-    this.alertLocation.appendChild(this.alertBlock);
+    this.alertLocation.appendChild(this.alertBlock.element);
   }
 
   hide() {
-    this.alertLocation.removeChild(this.alertBlock);
+    this.alertLocation.removeChild(this.alertBlock.element);
   }
 }
 
@@ -115,22 +120,14 @@ class Report {
   
   sort() {
     for (let key in this.themesList) {
-      if (this.themesList[key].tickets > 0) {
-        this.themesListArray.push(this.themesList[key]);
-      }
+      if (this.themesList[key].tickets > 0) this.themesListArray.push(this.themesList[key]);
     }
 
     this.themesListArray.sort( (a,b) => {
-      if (this.sortBy === 'amount') {
-        return b.tickets - a.tickets;
-      } 
+      if (this.sortBy === 'amount') return b.tickets - a.tickets;
       else {
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (a.name < b.name) {
-          return -1;
-        }
+        if (a.name > b.name) return 1;
+        if (a.name < b.name) return -1;
         return 0;
       }
     });
@@ -140,70 +137,51 @@ class Report {
     let table = document.querySelector('.table');
     table.innerHTML = "";
     
-    let totalRow = document.createElement('tr');
-    let totalTitle = document.createElement('td');
-    totalTitle.textContent = "Total tickets:";
-    let totalNumber = document.createElement('td');
-    totalNumber.textContent = this.totalTickets;
+    let totalRow = new DomElemetnt('tr');
+    let totalTitle = new DomElemetnt('td', false, "Total tickets:");
+    let totalNumber = new DomElemetnt('td', false, this.totalTickets);
+    totalRow.element.appendChild(totalTitle.element);
+    totalRow.element.appendChild(totalNumber.element);
+    table.appendChild(totalRow.element);
     
-    totalRow.appendChild(totalTitle);
-    totalRow.appendChild(totalNumber);
+    let lastRow = new DomElemetnt('tr');
+    let lastTitle = new DomElemetnt('td', false, "Last ticket number:");
+    let lastNumber = new DomElemetnt('td', false, this.lastTicket);
+    lastRow.element.appendChild(lastTitle.element);
+    lastRow.element.appendChild(lastNumber.element);
+    table.appendChild(lastRow.element);
     
-    let lastRow = document.createElement('tr');
-    let lastTitle = document.createElement('td');
-    lastTitle.textContent = "Last ticket number:";
-    let lastNumber = document.createElement('td');
-    lastNumber.textContent = this.lastTicket;
+    let firstRow = new DomElemetnt('tr');
+    let firstTitle = new DomElemetnt('td', false, "First ticket number:");
+    let firstNumber = new DomElemetnt('td', false, this.firstTicket);
+    firstRow.element.appendChild(firstTitle.element);
+    firstRow.element.appendChild(firstNumber.element);
+    table.appendChild(firstRow.element);
     
-    lastRow.appendChild(lastTitle);
-    lastRow.appendChild(lastNumber);
+    let removedRow = new DomElemetnt('tr');
+    let removedTitle = new DomElemetnt('td', false, "Total tickets removed:");
+    let removedNumber = new DomElemetnt('td', false, this.totalRemovedTickets);
+    removedRow.element.appendChild(removedTitle.element);
+    removedRow.element.appendChild(removedNumber.element);
+    table.appendChild(removedRow.element);
     
-    let firstRow = document.createElement('tr');
-    let firstTitle = document.createElement('td');
-    firstTitle.textContent = "First ticket number:";
-    let firstNumber = document.createElement('td');
-    firstNumber.textContent = this.firstTicket;
-    
-    firstRow.appendChild(firstTitle);
-    firstRow.appendChild(firstNumber);
-    
-    let removedRow = document.createElement('tr');
-    let removedTitle = document.createElement('td');
-    removedTitle.textContent = "First ticket number:";
-    let removedNumber = document.createElement('td');
-    removedNumber.textContent = this.totalRemovedTickets;
-    
-    removedRow.appendChild(removedTitle);
-    removedRow.appendChild(removedNumber);
-    
-    let dividerRow = document.createElement('tr');
-    let dividerData1 = document.createElement('td');
-    dividerData1.classList.add('table__divider');
-    let dividerData2 = document.createElement('td');
-    dividerData2.classList.add('table__divider');
-    
-    dividerRow.appendChild(dividerData1);
-    dividerRow.appendChild(dividerData2);
-       
-    table.appendChild(totalRow);
-    table.appendChild(lastRow);
-    table.appendChild(firstRow);
-    table.appendChild(removedRow);
-    table.appendChild(dividerRow);
+    let dividerRow = new DomElemetnt('tr');
+    let dividerData1 = new DomElemetnt('td',['table__divider']);
+    let dividerData2 = new DomElemetnt('td',['table__divider']);
+    dividerRow.element.appendChild(dividerData1.element);
+    dividerRow.element.appendChild(dividerData2.element);
+    table.appendChild(dividerRow.element);
     
     for (let i = 0; i < this.themesListArray.length; i++) {
       let name = this.themesListArray[i].name;
       let tickets = this.themesListArray[i].tickets;
-      
-      let tableRow = document.createElement('tr');
-      let tableDataName = document.createElement('td');
-      tableDataName.textContent = name;
-      let tableDataNumber = document.createElement('td');
-      tableDataNumber.textContent = tickets;
-      
-      tableRow.appendChild(tableDataName);
-      tableRow.appendChild(tableDataNumber);
-      table.appendChild(tableRow);
+
+      let tableRow = new DomElemetnt('tr');
+      let tableDataName = new DomElemetnt('td', false, name);
+      let tableDataNumber = new DomElemetnt('td', false, tickets);
+      tableRow.element.appendChild(tableDataName.element);
+      tableRow.element.appendChild(tableDataNumber.element);
+      table.appendChild(tableRow.element);
     }
   }
 }
@@ -258,7 +236,7 @@ const getReportButtonHandler = () => {
 }
 
 /*INIT*/
-  
+
 setDate();
 let spiner = new Spiner();
 spiner.show();
