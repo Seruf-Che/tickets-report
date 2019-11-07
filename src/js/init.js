@@ -85,26 +85,35 @@ class Report {
   
   calc() {  
     for (let i = 0; i < window.zendeskReport.length; i++) {
-      let elem = window.zendeskReport[i];
-      
-      if (elem && elem.split(';').length ===3 && elem.split(';')[1].slice(0,8) === `"${this.year}-${this.month}`) {
-        if (!this.lastTicket) {
-          this.lastTicket = elem.split(';')[0];
+      let elem = window.zendeskReport[i].split(';');
+      if (elem) {
+        if (elem[1]) {
+          const number = elem[0];
+          const year = elem[1].slice(7,11);
+          const month = elem[1].slice(4,6);
+          let name = elem[2]
+
+          if (elem.length === 3 && year === this.year && month === this.month ) {        
+            if (!this.lastTicket) {
+              this.lastTicket = number;
+            }
+
+            name = name.slice(1, name.length - 1);
+            if (name.length === 0) {
+              this.themesList['merged-tickets'].tickets++;
+            }
+            else {
+              this.themesList[name].tickets++;
+            }
+            this.firstTicket = number;
+            this.totalTickets++;
+          }
+
         }
-        let name = elem.split(';')[2];
-        name = name.slice(1, name.length - 1);
-        if (name.length === 0) {
-          this.themesList['merged-tickets'].tickets++;
-        }
-        else {
-          this.themesList[name].tickets++;
-        }
-        this.firstTicket = elem.split(';')[0];
-        this.totalTickets++;
-      } 
+      }
     }
     if (this.totalTickets === 0) {
-      let alert = new Alert('There is not any ticket, or Zendesk report has been generated wrong');
+      const alert = new Alert('There is not any ticket, or Zendesk report has been generated wrong');
       return alert.show();
     }
     this.totalRemovedTickets = this.lastTicket - this.firstTicket - this.totalTickets;
@@ -137,51 +146,51 @@ class Report {
     let table = document.querySelector('.table');
     table.innerHTML = "";
     
-    let totalRow = new DomElemetnt('tr');
-    let totalTitle = new DomElemetnt('td', false, "Total tickets:");
-    let totalNumber = new DomElemetnt('td', false, this.totalTickets);
-    totalRow.element.appendChild(totalTitle.element);
-    totalRow.element.appendChild(totalNumber.element);
-    table.appendChild(totalRow.element);
+    let totalRow = new DomElemetnt('tr').element;
+    let totalTitle = new DomElemetnt('td', false, "Total tickets:").element;
+    let totalNumber = new DomElemetnt('td', false, this.totalTickets).element;
+    totalRow.appendChild(totalTitle);
+    totalRow.appendChild(totalNumber);
+    table.appendChild(totalRow);
     
-    let lastRow = new DomElemetnt('tr');
-    let lastTitle = new DomElemetnt('td', false, "Last ticket number:");
-    let lastNumber = new DomElemetnt('td', false, this.lastTicket);
-    lastRow.element.appendChild(lastTitle.element);
-    lastRow.element.appendChild(lastNumber.element);
-    table.appendChild(lastRow.element);
+    let lastRow = new DomElemetnt('tr').element;
+    let lastTitle = new DomElemetnt('td', false, "Last ticket number:").element;
+    let lastNumber = new DomElemetnt('td', false, this.lastTicket).element;
+    lastRow.appendChild(lastTitle);
+    lastRow.appendChild(lastNumber);
+    table.appendChild(lastRow);
     
-    let firstRow = new DomElemetnt('tr');
-    let firstTitle = new DomElemetnt('td', false, "First ticket number:");
-    let firstNumber = new DomElemetnt('td', false, this.firstTicket);
-    firstRow.element.appendChild(firstTitle.element);
-    firstRow.element.appendChild(firstNumber.element);
-    table.appendChild(firstRow.element);
+    let firstRow = new DomElemetnt('tr').element;
+    let firstTitle = new DomElemetnt('td', false, "First ticket number:").element;
+    let firstNumber = new DomElemetnt('td', false, this.firstTicket).element;
+    firstRow.appendChild(firstTitle);
+    firstRow.appendChild(firstNumber);
+    table.appendChild(firstRow);
     
-    let removedRow = new DomElemetnt('tr');
-    let removedTitle = new DomElemetnt('td', false, "Total tickets removed:");
-    let removedNumber = new DomElemetnt('td', false, this.totalRemovedTickets);
-    removedRow.element.appendChild(removedTitle.element);
-    removedRow.element.appendChild(removedNumber.element);
-    table.appendChild(removedRow.element);
+    let removedRow = new DomElemetnt('tr').element;
+    let removedTitle = new DomElemetnt('td', false, "Total tickets removed:").element;
+    let removedNumber = new DomElemetnt('td', false, this.totalRemovedTickets).element;
+    removedRow.appendChild(removedTitle);
+    removedRow.appendChild(removedNumber);
+    table.appendChild(removedRow);
     
-    let dividerRow = new DomElemetnt('tr');
-    let dividerData1 = new DomElemetnt('td',['table__divider']);
-    let dividerData2 = new DomElemetnt('td',['table__divider']);
-    dividerRow.element.appendChild(dividerData1.element);
-    dividerRow.element.appendChild(dividerData2.element);
-    table.appendChild(dividerRow.element);
+    let dividerRow = new DomElemetnt('tr').element;
+    let dividerData1 = new DomElemetnt('td',['table__divider']).element;
+    let dividerData2 = new DomElemetnt('td',['table__divider']).element;
+    dividerRow.appendChild(dividerData1);
+    dividerRow.appendChild(dividerData2);
+    table.appendChild(dividerRow);
     
     for (let i = 0; i < this.themesListArray.length; i++) {
       let name = this.themesListArray[i].name;
       let tickets = this.themesListArray[i].tickets;
 
-      let tableRow = new DomElemetnt('tr');
-      let tableDataName = new DomElemetnt('td', false, name);
-      let tableDataNumber = new DomElemetnt('td', false, tickets);
-      tableRow.element.appendChild(tableDataName.element);
-      tableRow.element.appendChild(tableDataNumber.element);
-      table.appendChild(tableRow.element);
+      let tableRow = new DomElemetnt('tr').element;
+      let tableDataName = new DomElemetnt('td', false, name).element;
+      let tableDataNumber = new DomElemetnt('td', false, tickets).element;
+      tableRow.appendChild(tableDataName);
+      tableRow.appendChild(tableDataNumber);
+      table.appendChild(tableRow);
     }
   }
 }
