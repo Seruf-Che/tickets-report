@@ -91,14 +91,13 @@ class Report {
           const number = elem[0];
           const year = elem[1].slice(7,11);
           const month = elem[1].slice(4,6);
-          let name = elem[2]
+          const name = elem[2].slice(1, elem[2].length - 1);
 
           if (elem.length === 3 && year === this.year && month === this.month ) {        
             if (!this.lastTicket) {
               this.lastTicket = number;
             }
 
-            name = name.slice(1, name.length - 1);
             if (name.length === 0) {
               this.themesList['merged-tickets'].tickets++;
             }
