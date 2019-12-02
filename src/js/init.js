@@ -95,7 +95,6 @@ class Report {
           const year = elem[1].slice(7,11);
           const month = elem[1].slice(4,6);
           const name = elem[2].slice(1, elem[2].length - 1);
-          console.log(elem);
 
           if (elem.length === 3 && year === this.year && month === this.month ) {        
             if (!this.lastTicket) {
