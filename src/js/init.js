@@ -1,7 +1,7 @@
 class DomElemetnt {
   constructor(tag = 'div', classList = [], textContent){    
     let element = document.createElement(tag);
-    if (textContent) element.textContent = textContent;
+    if (textContent) element.innerHTML = textContent;
     if (classList) classList.forEach(elem => element.classList.add(elem));
     this._element = element;
   }
@@ -41,14 +41,15 @@ class Alert {
   constructor(
     text = 'Alert Window Text',
     okButtonText = 'Ok',
+    reload = false,
     alertLocationSelector = 'main',
     alertBlockClass = 'alert',
     alertBlockWrapperClass = 'alert__window',
     alertTextClass = 'alert__text',
-    alertButtonClass = 'alert__button'
+    alertButtonClass = 'alert__button'    
   ){
     this.alertLocation = document.querySelector(alertLocationSelector);
-      
+    this.reload = reload;
     let alertBlock = new DomElemetnt('div',[alertBlockClass],'');
     let alertBlockWrapper = new DomElemetnt('div',[alertBlockWrapperClass],'');
     let alertText = new DomElemetnt('div',[alertTextClass],text);
@@ -67,11 +68,13 @@ class Alert {
 
   hide() {
     this.alertLocation.removeChild(this.alertBlock.element);
+    if (this.reload) window.location.reload(); 
   }
 }
 
 class Report {
   constructor() {
+    this.themesListAddress = "https://docs.google.com/spreadsheets/d/1z7zJumlt7AZXF1GC6lU2ObMorZUxJZGSOIoiYPeQwbM/edit#gid=0"
     this.year = document.getElementById('year').value;
     this.month = document.getElementById('month').value; 
     this.sortBy = document.getElementById('sort-by').value;
@@ -92,6 +95,7 @@ class Report {
           const year = elem[1].slice(7,11);
           const month = elem[1].slice(4,6);
           const name = elem[2].slice(1, elem[2].length - 1);
+          console.log(elem);
 
           if (elem.length === 3 && year === this.year && month === this.month ) {        
             if (!this.lastTicket) {
@@ -102,7 +106,12 @@ class Report {
               this.themesList['merged-tickets'].tickets++;
             }
             else {
-              this.themesList[name].tickets++;
+              if (this.themesList[name]) {
+                this.themesList[name].tickets++;
+              } else {
+                const alert = new Alert(`The ${name} theme was not found in the themes list. Please proceed <a href="${this.themesListAddress}" target="_blank" style="font-weight: 700; color: #ffffff">here</a> to add it.`, "Reload", true);
+                return alert.show();
+              }
             }
             this.firstTicket = number;
             this.totalTickets++;
