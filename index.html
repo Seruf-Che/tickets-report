@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tickets report</title>
+  <meta name="author" content="Seruf">
+  <meta name="copyright" content="(c)Seruf2019">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
+  <link rel="stylesheet" href="css/style.min.css">
+</head>
+<body class="body">
+  <header class="page-header">
+    <div class="row">
+      <h1 class="heading heading--1">Tickets report</h1>
+    </div>
+  </header>
+  <main>
+    <div class="row row--options">
+      <div class="row__col11">
+        <h2>Zendesk report</h2>
+        <div class="form__file">
+          <input type="file" id="zendesk-report">
+          <button class="button button--input">Upload a report</button>
+        </div>
+      </div>
+      <div class="row__col11 row__col11--margin-top">
+        <input type="number" id="year" value="2018" class="form__input">
+        <select id="month" class="form__select">
+          <option value="01">January</option>
+          <option value="02">February</option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">August</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <span class="form__label">Sort by:</span>
+        <select id="sort-by" class="form__select">
+          <option value="name">Name</option>
+          <option value="amount">Amount</option>
+        </select>
+      </div>
+      <button disabled="" class="calcReport button button--center button__calcReport">Get report</button>
+    </div>
+    <div class="row">
+      <div class="row__col11">
+        <table class="report table">
+        </table>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+    <div class="row">
+      <p class="copyright">Copyright © 2019 Made By Seruf.</p>
+    </div>
+  </footer>
+  <script src="js/main.min.js"></script>
+</body>
+</html>
