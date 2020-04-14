@@ -1,6 +1,7 @@
 # Folders ignoring
 node_modules/
 build/
+.idea
 
 ### Windows ###
 # Windows thumbnail cache files

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The app generates Tickets Report",
   "main": "index.js",
-  "homepage": "https://seruf-che.github.io/tickets-report/",
+  "homepage": "https://github.com/Seruf-Che/tickets-report#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp build",
@@ -20,7 +20,6 @@
   "bugs": {
     "url": "https://github.com/Seruf-Che/tickets-report/issues"
   },
-  "homepage": "https://github.com/Seruf-Che/tickets-report#readme",
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
